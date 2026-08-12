@@ -1,7 +1,8 @@
 
   
     
-       export default {
+       
+          export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
@@ -9,7 +10,7 @@
       return json({
         status: "online",
         service: "V. Dohmusi Lulu Fulfillment",
-        version: "lulu-auth-test"
+        version: "basic-auth-test"
       });
     }
 
@@ -21,29 +22,28 @@
           env.LULU_CLIENT_KEY.length > 0,
         LULU_CLIENT_SECRET_exists:
           typeof env.LULU_CLIENT_SECRET === "string" &&
-          env.LULU_CLIENT_SECRET.length > 0
+          env.LULU_CLIENT_SECRET.length > 0,
+        LULU_BASIC_AUTH_exists:
+          typeof env.LULU_BASIC_AUTH === "string" &&
+          env.LULU_BASIC_AUTH.length > 0
       });
     }
 
     if (url.pathname === "/test-lulu") {
       try {
-        if (!env.LULU_CLIENT_KEY || !env.LULU_CLIENT_SECRET) {
+        if (!env.LULU_BASIC_AUTH) {
           return json({
             success: false,
-            error: "Lulu credentials are missing"
+            error: "LULU_BASIC_AUTH is missing"
           }, 500);
         }
-
-        const credentials = btoa(
-          `${env.LULU_CLIENT_KEY}:${env.LULU_CLIENT_SECRET}`
-        );
 
         const response = await fetch(
           "https://api.sandbox.lulu.com/auth/realms/glasstree/protocol/openid-connect/token",
           {
             method: "POST",
             headers: {
-              "Authorization": `Basic ${credentials}`,
+              "Authorization": `Basic ${env.LULU_BASIC_AUTH}`,
               "Content-Type": "application/x-www-form-urlencoded",
               "Accept": "application/json"
             },
@@ -78,7 +78,9 @@
       }
     }
 
-    return new Response("Not found", { status: 404 });
+    return new Response("Not found", {
+      status: 404
+    });
   }
 };
 
