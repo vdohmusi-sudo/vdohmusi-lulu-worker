@@ -1,6 +1,6 @@
 
-  }
-export default {
+  
+      export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
@@ -9,7 +9,7 @@ export default {
         JSON.stringify({
           status: "online",
           service: "V. Dohmusi Lulu Fulfillment",
-          version: "diagnostic-1"
+          version: "diagnostic-2"
         }),
         {
           headers: {
@@ -42,6 +42,8 @@ export default {
       );
     }
 
-    return new Response("Not found", { status: 404 });
+    return new Response("Not found", {
+      status: 404
+    });
   }
 };
