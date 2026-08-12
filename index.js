@@ -43,7 +43,7 @@
           {
             method: "POST",
             headers: {
-              "Authorization": `Basic ${env.LULU_BASIC_AUTH}`,
+              "Authorization": env.LULU_BASIC_AUTH,
               "Content-Type": "application/x-www-form-urlencoded",
               "Accept": "application/json"
             },
