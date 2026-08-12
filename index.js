@@ -39,7 +39,7 @@
         }
 
         const response = await fetch(
-          "https://api.sandbox.lulu.com/auth/realms/glasstree/protocol/openid-connect/token",
+          "https://api.lulu.com/auth/realms/glasstree/protocol/openid-connect/token",
           {
             method: "POST",
             headers: {
